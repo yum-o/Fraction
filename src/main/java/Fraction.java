@@ -6,7 +6,7 @@ public class Fraction {
     public Fraction(int numerator, int denominator) {
         this.numerator = numerator;
         if (denominator == 0) {
-            throw new IllegalArgumentException(Integer.toString(denominator));
+            throw new IllegalArgumentException();
         } else if(denominator < 0) {
             this.numerator *= -1;
             this.denominator = (-1) * denominator;
@@ -15,47 +15,48 @@ public class Fraction {
         }
     }
 
-    public Fraction(int numerator) {
-        this(numerator, 1);
+    Fraction add(Fraction other){
+        int fracDenominator = lowestCommonMultiple(this.denominator, other.denominator);
+        int fracNumerator = ((fracDenominator/ this.denominator) * this.numerator) + ((fracDenominator/ other.denominator) * other.numerator);
+        return new Fraction(fracNumerator, fracDenominator);
+
     }
 
-    public Fraction() {
-        this(0, 1);
+    Fraction subtract(Fraction other){
+        int fracDenominator = lowestCommonMultiple(this.denominator, other.denominator);
+        int fracNumerator = ((fracDenominator/ this.denominator) * this.numerator) - ((fracDenominator/ other.denominator) * other.numerator);
+        return new Fraction(fracNumerator, fracDenominator);
     }
 
-    public Fraction add(Fraction other){
-
-        return null;
+    Fraction multiply(Fraction other){
+        int fracNumerator =  this.numerator * other.numerator;
+        int fracDenominator = this.denominator * other.denominator;
+        return new Fraction(fracNumerator, fracDenominator);
     }
 
-    public Fraction subtract(Fraction other){
-
-        return null;
+    Fraction divide(Fraction other){
+        if(other.denominator == 0){
+            throw new IllegalArgumentException(Integer.toString(denominator));
+        }
+        int fracNumerator =  this.numerator * other.denominator;
+        int fracDenominator = this.denominator * other.numerator;
+        return new Fraction(fracNumerator, fracDenominator);
     }
 
-    public Fraction multiply(Fraction other){
-
-        return null;
-    }
-
-    public Fraction divide(Fraction other){
-
-        return null;
-    }
-
-    public int fractionResult(){
-
-        return 0;
+    int fractionResult(){
+        return numerator /denominator;
     }
 
     private static int greatestCommonDivisor(int num, int den){
-
-        return 0;
+        if (den == 0) {
+            return num;
+        }
+        return greatestCommonDivisor(den, num % den);
     }
 
     private static int lowestCommonMultiple(int den1, int den2){
-
-        return 0;
+        int numgreatestCommonDivisor = greatestCommonDivisor(den1, den2);
+        return (den1 * den2)/ numgreatestCommonDivisor;
     }
 
 }
